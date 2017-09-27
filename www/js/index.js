@@ -955,7 +955,8 @@ var app = {
 
                     //console.log('Respuesta:', JSON.parse(response));
                     //JSON.parse(response);
-                        $(".exit").html(response);
+                    var resp = JSON.parse(response);
+                        $(".exit").html(resp);
 
                     },
                     error: function (textStatus, errorThrown) {
