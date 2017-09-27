@@ -954,6 +954,8 @@ var app = {
                     success: function (response, txtStatus, xhr) {
 
                     //console.log('Respuesta:', JSON.parse(response));
+                    //JSON.parse(response);
+                        $(".exit").html(response);
 
                     },
                     error: function (textStatus, errorThrown) {
