@@ -954,9 +954,12 @@ var app = {
                     success: function (response, txtStatus, xhr) {
 
                     //console.log('Respuesta:', JSON.parse(response));
-                    //JSON.parse(response);
-                    var resp = JSON.parse(response);
-                        $(".exit").html(resp);
+                    navigator.notification.alert(
+                            response,  // message
+                            null,         // callback
+                            txtStatus,            // title
+                            'Done'                  // buttonName
+                        );
 
                     },
                     error: function (textStatus, errorThrown) {
