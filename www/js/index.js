@@ -936,6 +936,7 @@ var app = {
             console.log('registration event: ' + data.registrationId);
 
             var oldRegId = localStorage.getItem('registrationId');
+            var nombre_usuario = localStorage.getItem('uname');
             if (oldRegId !== data.registrationId) {
                 // Save new registration ID
                 localStorage.setItem('registrationId', data.registrationId);
@@ -948,7 +949,7 @@ var app = {
                     method: "POST",
                     data: {
                         regId: data.registrationId,
-                        nombreUsuario: localStorage.getItem('uname');
+                        nombreUsuario: nombre_usuario
                     },
                     success: function (response, txtStatus, xhr) {
 
