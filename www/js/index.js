@@ -948,7 +948,7 @@ var app = {
                     method: "POST",
                     data: {
                         regId: data.registrationId,
-                        nombreUsuario: localStorage.uname
+                        nombreUsuario: localStorage.getItem('uname');
                     },
                     success: function (response, txtStatus, xhr) {
 
