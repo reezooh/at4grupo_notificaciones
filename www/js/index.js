@@ -954,12 +954,6 @@ var app = {
                     success: function (response, txtStatus, xhr) {
 
                     //console.log('Respuesta:', JSON.parse(response));
-                    navigator.notification.alert(
-                            response,  // message
-                            null,         // callback
-                            txtStatus,            // title
-                            'Done'                  // buttonName
-                        );
 
                     },
                     error: function (textStatus, errorThrown) {
