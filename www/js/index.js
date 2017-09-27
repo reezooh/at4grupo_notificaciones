@@ -940,29 +940,28 @@ var app = {
                 // Save new registration ID
                 localStorage.setItem('registrationId', data.registrationId);
                 // Post registrationId to your app server as the value has changed
+                $.ajax({
+                    async: true,
+                    crossDomain: true,
+                    //url: "http://clientes.at4grupo.es/webservice/firebase/?funcion=escribir_log",
+                    url: "http://clientes.at4grupo.es/webservice/firebase/escritura/?funcion=gestion_usuarios_firebase",
+                    method: "POST",
+                    data: {
+                        regId: data.registrationId,
+                        nombreUsuario: localStorage.uname
+                    },
+                    success: function (response, txtStatus, xhr) {
+
+                    //console.log('Respuesta:', JSON.parse(response));
+
+                    },
+                    error: function (textStatus, errorThrown) {
+
+                    console.log(textStatus + ' ' + errorThrown);
+                    }
+                });
+
             }
-
-            
-            $.ajax({
-                async: true,
-                crossDomain: true,
-                //url: "http://clientes.at4grupo.es/webservice/firebase/?funcion=escribir_log",
-                url: "http://clientes.at4grupo.es/webservice/firebase/escritura/?funcion=gestion_usuarios_firebase",
-                method: "POST",
-                data: {
-                regId: data.registrationId
-
-                },
-                success: function (response, txtStatus, xhr) {
-
-                //console.log('Respuesta:', JSON.parse(response));
-
-                },
-                error: function (textStatus, errorThrown) {
-
-                console.log(textStatus + ' ' + errorThrown);
-                }
-            });
 
             var parentElement = document.getElementById('registration');
             var listeningElement = parentElement.querySelector('.waiting');
