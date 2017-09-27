@@ -936,7 +936,7 @@ var app = {
             console.log('registration event: ' + data.registrationId);
 
             var oldRegId = localStorage.getItem('registrationId');
-            var nombre_usuario = localStorage.getItem('uname');
+            var nombre_usuario = $("#email").val();
             if (oldRegId !== data.registrationId) {
                 // Save new registration ID
                 localStorage.setItem('registrationId', data.registrationId);
