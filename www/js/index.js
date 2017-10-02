@@ -951,8 +951,7 @@ var app = {
                     method: "POST",
                     data: {
                         regId: data.registrationId,
-                        nombreUsuario: nombre_usuario,
-                        version: device.version
+                        nombreUsuario: nombre_usuario
                     },
                     success: function (response, txtStatus, xhr) {
 
