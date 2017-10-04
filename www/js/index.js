@@ -923,10 +923,8 @@ var app = {
             "browser": {},
             "ios": {
                 "senderID": "406041629151",
-                "gcmSandBox": true,
                 "sound": true,
-                "vibration": true,
-                "badge": true
+                "vibration": true
             },
             "windows": {}
         });
