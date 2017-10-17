@@ -924,7 +924,9 @@ var app = {
             "ios": {
                 "sound": true,
                 "vibration": true,
-                "badge": true
+                "badge": true,
+                "senderID": "406041629151",
+                "fcmSandbox": true
             },
             "windows": {}
         });
