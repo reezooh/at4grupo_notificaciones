@@ -925,7 +925,8 @@ var app = {
                 "sound": true,
                 "vibration": true,
                 "badge": true,
-                "senderID": "406041629151"
+                "senderID": "406041629151",
+                "gcmSandbox": false
             },
             "windows": {}
         });
