@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:406041629151:android:f8a25edcae4efb91",
         "android_client_info": {
-          "package_name": "com.phonegap.at4clientes"
+          "package_name": "es.amplya.clientesat4"
         }
       },
       "oauth_client": [

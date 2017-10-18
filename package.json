@@ -1,5 +1,5 @@
 {
-    "name": "com.phonegap.at4clientes",
+    "name": "es.amplya.clientesat4",
     "version": "1.0.0",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
