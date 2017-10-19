@@ -874,11 +874,8 @@ var app = {
 
         push.on('registration', function(data) {
             console.log('registration event: ' + data.registrationId);
-            var oldRegId = ''
-            if (localStorage.getItem('registrationId')){
-                oldRegId = localStorage.getItem('registrationId');
-            }
-            //var oldRegId = localStorage.getItem('registrationId');
+
+            var oldRegId = localStorage.getItem('registrationId');
             var nombre_usuario = $("#email").val();
             if (oldRegId !== data.registrationId) {
                 // Save new registration ID
