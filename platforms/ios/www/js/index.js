@@ -832,66 +832,6 @@ function insertPost(nombre_usuario, contrasenya, contenido)
 /**
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  */
-function setupPush() {
-   /*var push = PushNotification.init({
-       "android": {
-           "senderID": "406041629151"
-       },
-       "ios": {
-         "sound": true,
-         "alert": true,
-         "badge": true
-       },
-       "windows": {}
-   });
-
-   push.on('registration', function(data) {
-       console.log("registration event: " + data.registrationId);
-       var oldRegId = localStorage.getItem('registrationId');
-       if (oldRegId !== data.registrationId) {
-           // Save new registration ID
-           localStorage.setItem('registrationId', data.registrationId);
-           // Post registrationId to your app server as the value has changed
-       }
-
-       $.ajax({
-                async: true,
-                crossDomain: true,
-                //url: "http://clientes.at4grupo.es/webservice/firebase/?funcion=escribir_log",
-                url: "http://clientes.at4grupo.es/webservice/firebase/escritura/?funcion=gestion_usuarios_firebase",
-                method: "POST",
-                data: {
-                regId: data.registrationId,
-                nombreUsuario: localStorage.uname
-
-                },
-                success: function (response, txtStatus, xhr) {
-
-                //console.log('Respuesta:', JSON.parse(response));
-
-                },
-                error: function (textStatus, errorThrown) {
-
-                console.log(textStatus + ' ' + errorThrown);
-                }
-        });
-   });
-
-   push.on('error', function(e) {
-       console.log("push error = " + e.message);
-   });
-
-   push.on('notification', function(data) {
-         console.log('notification event');
-         navigator.notification.alert(
-             data.message,         // message
-             null,                 // callback
-             data.title,           // title
-             'Ok'                  // buttonName
-         );
-     });*/
-
-}
 
 var app = {
     // Application Constructor
@@ -934,8 +874,11 @@ var app = {
 
         push.on('registration', function(data) {
             console.log('registration event: ' + data.registrationId);
-
-            var oldRegId = localStorage.getItem('registrationId');
+            var oldRegId = ''
+            if (localStorage.getItem('registrationId')){
+                oldRegId = localStorage.getItem('registrationId');
+            }
+            //var oldRegId = localStorage.getItem('registrationId');
             var nombre_usuario = $("#email").val();
             if (oldRegId !== data.registrationId) {
                 // Save new registration ID
