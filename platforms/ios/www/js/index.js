@@ -875,34 +875,31 @@ var app = {
         push.on('registration', function(data) {
             console.log('registration event: ' + data.registrationId);
 
-            var oldRegId = localStorage.getItem('registrationId');
             var nombre_usuario = $("#email").val();
-            if (oldRegId !== data.registrationId) {
-                // Save new registration ID
-                localStorage.setItem('registrationId', data.registrationId);
-                // Post registrationId to your app server as the value has changed
-                $.ajax({
-                    async: true,
-                    crossDomain: true,
-                    //url: "http://clientes.at4grupo.es/webservice/firebase/?funcion=escribir_log",
-                    url: "http://clientes.at4grupo.es/webservice/firebase/escritura/?funcion=gestion_usuarios_firebase",
-                    method: "POST",
-                    data: {
-                        regId: data.registrationId,
-                        nombreUsuario: nombre_usuario
-                    },
-                    success: function (response, txtStatus, xhr) {
 
-                    //console.log('Respuesta:', JSON.parse(response));
+            // Save new registration ID
+            localStorage.setItem('registrationId', data.registrationId);
+            // Post registrationId to your app server as the value has changed
+            $.ajax({
+                async: true,
+                crossDomain: true,
+                //url: "http://clientes.at4grupo.es/webservice/firebase/?funcion=escribir_log",
+                url: "http://clientes.at4grupo.es/webservice/firebase/escritura/?funcion=gestion_usuarios_firebase",
+                method: "POST",
+                data: {
+                    regId: data.registrationId,
+                    nombreUsuario: nombre_usuario
+                },
+                success: function (response, txtStatus, xhr) {
 
-                    },
-                    error: function (textStatus, errorThrown) {
+                //console.log('Respuesta:', JSON.parse(response));
 
-                    console.log(textStatus + ' ' + errorThrown);
-                    }
-                });
+                },
+                error: function (textStatus, errorThrown) {
 
-            }
+                console.log(textStatus + ' ' + errorThrown);
+                }
+            });
 
             var parentElement = document.getElementById('registration');
             var listeningElement = parentElement.querySelector('.waiting');
