@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="es.amplya.clientesat4" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="es.amplya.clientesat4" version="0.3.24" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <feature name="Notification">
         <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
     </feature>
@@ -14,12 +14,12 @@
     <feature name="PushNotification">
         <param name="android-package" value="com.adobe.phonegap.push.PushPlugin" />
     </feature>
-    <name>at4grupo</name>
+    <name>AT4grupo</name>
     <description>
-        Push sample application that receives push notifications.
+        AT4grupo - Notificaciones clientes
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+    <author email="mas_info@amplya.es" href="https://amplya.es/">
+        Amplya, S.L.
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -52,6 +52,6 @@
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
     <preference name="StatusBarOverlaysWebView" value="false" />
-    <preference name="StatusBarBackgroundColor" value="#ee6e73" />
+    <preference name="StatusBarBackgroundColor" value="#013760" />
     <preference name="StatusBarStyle" value="blacktranslucent" />
 </widget>

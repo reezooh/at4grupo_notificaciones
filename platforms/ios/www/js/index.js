@@ -864,7 +864,9 @@ var app = {
             "ios": {
                 "sound": true,
                 "vibration": true,
-                "badge": true
+                "badge": true,
+                "senderID": "406041629151",
+                "gcmSandbox": false
             },
             "windows": {}
         });
@@ -875,8 +877,8 @@ var app = {
         push.on('registration', function(data) {
             console.log('registration event: ' + data.registrationId);
 
-            var nombre_usuario = $("#email").val();
 
+            var nombre_usuario = $("#email").val();
             // Save new registration ID
             localStorage.setItem('registrationId', data.registrationId);
             // Post registrationId to your app server as the value has changed
@@ -900,6 +902,8 @@ var app = {
                 console.log(textStatus + ' ' + errorThrown);
                 }
             });
+
+        
 
             var parentElement = document.getElementById('registration');
             var listeningElement = parentElement.querySelector('.waiting');
