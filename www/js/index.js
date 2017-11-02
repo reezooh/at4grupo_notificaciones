@@ -286,6 +286,12 @@ $(document).ready(function ()
         location.assign('#login');
     });
 
+    // evento: touchend sobre una imagen del contenido de la entrada ///////////
+    $('.cuerpo-entrada').on('touchend', 'img', function(e){
+
+        PhotoViewer.show($(this).attr('src'), '', {share:false});
+    });
+
 }); // Fin document ready //////////////////////////////////////////////////////
 
 /**
