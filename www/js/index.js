@@ -1,4 +1,4 @@
-var page = 2;
+var page = 1;
 var camera = {};
 camera.images = [];
 
@@ -287,7 +287,7 @@ $(document).ready(function ()
         location.assign('#login');
     });
 
-    // evento: clic para aumentar la imagen ///////////////////////////////////
+    // evento: clic para aumentar la imagen ////////////////////////////////////
     $('#lista-entradas').on('click', 'img', function(e){
         console.log('clic');
         PhotoViewer.show($(this).attr('src'), '', {share:false});
