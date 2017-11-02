@@ -1,3 +1,4 @@
+var page = 1;
 var camera = {};
 camera.images = [];
 
