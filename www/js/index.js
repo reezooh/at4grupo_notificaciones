@@ -621,11 +621,6 @@ function mostrarMasEntradas(entradas)
 
     console.log('@mostrarMasEntradas');
 
-    sessionStorage.proyecto_id = proyecto.id;
-    sessionStorage.proyecto_nombre = proyecto.nombre;
-    sessionStorage.proyecto_prescriptor = proyecto.prescriptor;
-    $('.titulo-proyecto').html(proyecto.nombre);
-    $('.prescriptor').html(proyecto.prescriptor);
     $.each(entradas, function (indice, entrada)
     {
         // console.log(entrada);
@@ -653,8 +648,17 @@ function mostrarMasEntradas(entradas)
         $('#lista-entradas > li > .eliminar').css('display', 'block');
     }
 
+    // Se oculta el indicador de "cargando"
     $.mobile.loading("hide");
+
+    // Se rehabilita el botón de descarga
     $('#add-100').prop("disabled", false);
+
+    // Si se reciben menos de 100 se entiende que ya no hay más entradas y se
+    // oculta el botón de descarga
+    if (entradas.length < 100) {
+        $('#add-100').css('display', 'none');
+    }
 }
 
 /**
