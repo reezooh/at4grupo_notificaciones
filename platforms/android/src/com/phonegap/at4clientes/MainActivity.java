@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.phonegap.at4clientes;
+package es.amplya.clientesat4;
 
 import android.os.Bundle;
 import org.apache.cordova.*;

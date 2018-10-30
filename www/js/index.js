@@ -96,6 +96,28 @@ $(document).ready(function ()
         }
     });
 
+    // evento: clic para cargar 100 entradas más ///////////////////////////////
+    $('#add-100').on('click', function (e)
+    {
+        $.mobile.loading('show', {
+            text: "Cargando...",
+            textVisible: true,
+            theme: "a"
+        });
+
+        // Se incrementa el valor de 'page'
+        page++;
+
+        // Se desactiva el botón hasta que se hayan cargado las entradas
+        $(this).prop("disabled", true);
+
+        // se recuperan las entradas
+        project_id = sessionStorage.proyecto_id;
+        ws_url = 'http://clientes.at4grupo.es/webservice/?function=wp_fx_get';
+        wp_url = 'http://clientes.at4grupo.es/wp-json/wp/v2/posts/?page=' + page + '&per_page=100&categories=' + project_id;
+        obtenerDatos(nombre_usuario, contrasenya, ws_url, wp_url, mostrarMasEntradas);
+    });
+
     // evento: clic en volver desde la lista de entradas ///////////////////////
     $('#back-from-posts-list').on('click', function ()
     {
@@ -287,6 +309,13 @@ $(document).ready(function ()
         location.assign('#login');
     });
 
+    // evento: clic para aumentar la imagen ////////////////////////////////////
+    $('#lista-entradas').on('click', 'img', function (e)
+    {
+        console.log('clic');
+        PhotoViewer.show($(this).attr('src'), '', { share: false });
+    });
+
 }); // Fin document ready //////////////////////////////////////////////////////
 
 /**
@@ -365,7 +394,7 @@ function habilitarUsuario(registro)
         } else if (registro.roles[0] === 'subscriber') {
 
             $('#login-error').css('display', 'none');
-            
+
 
             // se llama a la función que recupera las categorías
             ws_url = 'http://clientes.at4grupo.es/webservice/?function=wp_fx_get_projects_with_date';
@@ -579,6 +608,57 @@ function mostrarEntradas(entradas, proyecto)
     }
 
     $.mobile.loading("hide");
+}
+
+/**
+ * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ * @name mostrarMasEntradas
+ * @param {type} entradas
+ * @returns {undefined}
+ */
+function mostrarMasEntradas(entradas)
+{
+
+    console.log('@mostrarMasEntradas');
+
+    $.each(entradas, function (indice, entrada)
+    {
+        // console.log(entrada);
+
+        var html = '';
+        html += '<li>' +
+            '<a href="#editar-titulo" data-rel="popup" data-transition="pop" class="editar ui-btn ui-shadow ui-corner-all" data-entrada-id="' + entrada.id + '" data-entrada-titulo="' + entrada.title.rendered + '"></a>' +
+            '<a class="eliminar ui-btn ui-shadow ui-corner-all" data-entrada-id="' + entrada.id + '"></a>' +
+            '<a href="#" data-proyecto-nombre="' + sessionStorage.proyecto_nombre + '">' +
+            entrada.title.rendered +
+            '<br>' +
+            '<span>' + entrada.date.substr(0, 10).split('-').reverse().join('-') + '</span>' +
+            '<br>' +
+            '<br>' +
+            '<div class="cuerpo-entrada">' + entrada.content.rendered + '</div>' +
+            '</a>' +
+            '</li>';
+        $('#lista-entradas').append(html);
+        $('.cuerpo-entrada img').attr('height', '');
+    });
+
+    // para el jefe de obra se muestra el botón de editar/eliminar la entrada
+    if (autor === true) {
+        $('#lista-entradas > li > .editar').css('display', 'block');
+        $('#lista-entradas > li > .eliminar').css('display', 'block');
+    }
+
+    // Se oculta el indicador de "cargando"
+    $.mobile.loading("hide");
+
+    // Se rehabilita el botón de descarga
+    $('#add-100').prop("disabled", false);
+
+    // Si se reciben menos de 100 se entiende que ya no hay más entradas y se
+    // oculta el botón de descarga
+    if (entradas.length < 100) {
+        $('#add-100').css('display', 'none');
+    }
 }
 
 /**
@@ -833,89 +913,33 @@ function insertPost(nombre_usuario, contrasenya, contenido)
 /**
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  */
-function setupPush() {
-   /*var push = PushNotification.init({
-       "android": {
-           "senderID": "406041629151"
-       },
-       "ios": {
-         "sound": true,
-         "alert": true,
-         "badge": true
-       },
-       "windows": {}
-   });
-
-   push.on('registration', function(data) {
-       console.log("registration event: " + data.registrationId);
-       var oldRegId = localStorage.getItem('registrationId');
-       if (oldRegId !== data.registrationId) {
-           // Save new registration ID
-           localStorage.setItem('registrationId', data.registrationId);
-           // Post registrationId to your app server as the value has changed
-       }
-
-       $.ajax({
-                async: true,
-                crossDomain: true,
-                //url: "http://clientes.at4grupo.es/webservice/firebase/?funcion=escribir_log",
-                url: "http://clientes.at4grupo.es/webservice/firebase/escritura/?funcion=gestion_usuarios_firebase",
-                method: "POST",
-                data: {
-                regId: data.registrationId,
-                nombreUsuario: localStorage.uname
-
-                },
-                success: function (response, txtStatus, xhr) {
-
-                //console.log('Respuesta:', JSON.parse(response));
-
-                },
-                error: function (textStatus, errorThrown) {
-
-                console.log(textStatus + ' ' + errorThrown);
-                }
-        });
-   });
-
-   push.on('error', function(e) {
-       console.log("push error = " + e.message);
-   });
-
-   push.on('notification', function(data) {
-         console.log('notification event');
-         navigator.notification.alert(
-             data.message,         // message
-             null,                 // callback
-             data.title,           // title
-             'Ok'                  // buttonName
-         );
-     });*/
-
-}
 
 var app = {
     // Application Constructor
-    initialize: function() {
+    initialize: function ()
+    {
         this.bindEvents();
     },
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
+    bindEvents: function ()
+    {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
+    onDeviceReady: function ()
+    {
         console.log('Received Device Ready Event');
         console.log('calling setup push');
         app.setupPush();
     },
-    setupPush: function() {
+    setupPush: function ()
+    {
         console.log('calling push init');
         var push = PushNotification.init({
             "android": {
@@ -925,7 +949,9 @@ var app = {
             "ios": {
                 "sound": true,
                 "vibration": true,
-                "badge": true
+                "badge": true,
+                "senderID": "406041629151",
+                "gcmSandbox": false
             },
             "windows": {}
         });
@@ -933,37 +959,39 @@ var app = {
 
 
 
-        push.on('registration', function(data) {
+        push.on('registration', function (data)
+        {
             console.log('registration event: ' + data.registrationId);
 
-            var oldRegId = localStorage.getItem('registrationId');
+
             var nombre_usuario = $("#email").val();
-            if (oldRegId !== data.registrationId) {
-                // Save new registration ID
-                localStorage.setItem('registrationId', data.registrationId);
-                // Post registrationId to your app server as the value has changed
-                $.ajax({
-                    async: true,
-                    crossDomain: true,
-                    //url: "http://clientes.at4grupo.es/webservice/firebase/?funcion=escribir_log",
-                    url: "http://clientes.at4grupo.es/webservice/firebase/escritura/?funcion=gestion_usuarios_firebase",
-                    method: "POST",
-                    data: {
-                        regId: data.registrationId,
-                        nombreUsuario: nombre_usuario
-                    },
-                    success: function (response, txtStatus, xhr) {
+            // Save new registration ID
+            localStorage.setItem('registrationId', data.registrationId);
+            // Post registrationId to your app server as the value has changed
+            $.ajax({
+                async: true,
+                crossDomain: true,
+                //url: "http://clientes.at4grupo.es/webservice/firebase/?funcion=escribir_log",
+                url: "http://clientes.at4grupo.es/webservice/firebase/escritura/?funcion=gestion_usuarios_firebase",
+                method: "POST",
+                data: {
+                    regId: data.registrationId,
+                    nombreUsuario: nombre_usuario
+                },
+                success: function (response, txtStatus, xhr)
+                {
 
                     //console.log('Respuesta:', JSON.parse(response));
 
-                    },
-                    error: function (textStatus, errorThrown) {
+                },
+                error: function (textStatus, errorThrown)
+                {
 
                     console.log(textStatus + ' ' + errorThrown);
-                    }
-                });
+                }
+            });
 
-            }
+
 
             var parentElement = document.getElementById('registration');
             var listeningElement = parentElement.querySelector('.waiting');
@@ -973,8 +1001,8 @@ var app = {
             receivedElement.setAttribute('style', 'display:block;');
 
             //document.getElementById("regId").innerHTML = data.registrationId;
-            
-           
+
+
 
         });
 
@@ -986,11 +1014,13 @@ var app = {
             document.getElementById("topic").innerHTML = "No ha sido posible suscribirse al tema";
         });*/
 
-        push.on('error', function(e) {
+        push.on('error', function (e)
+        {
             console.log("push error = " + e.message);
         });
 
-        push.on('notification', function(data) {
+        push.on('notification', function (data)
+        {
             console.log('notification event');
             navigator.notification.alert(
                 data.message,         // message
@@ -998,6 +1028,6 @@ var app = {
                 data.title,           // title
                 'Ok'                  // buttonName
             );
-       });
+        });
     }
 };
